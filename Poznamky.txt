@@ -1,0 +1,12 @@
+﻿export{
+Pro windows:
+	dotnet publish -c Release -r win-x64
+Pro jinou platformu
+	dotnet publish -c Release -r platforma
+}
+5) {
+Systém pro configuraci
+}
+6{
+SN-2022Apr07-kjD6xRmhe6e7e1MJoQbyI37N4UfIcnJInkq31MrwS26TAgUQdhgDt5vLqjJuv8Z0nWH1WpAG6RgTXfEtRDtdcBcN5Ug==A
+}
