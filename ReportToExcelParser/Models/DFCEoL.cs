@@ -5,23 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace ReportToExcelParser.Models
+namespace ReportToExcelParser.Models.Old
 {
-    /*
+    
     [System.SerializableAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute()]
     [XmlTypeAttribute(AnonymousType = true)]
-    [XmlRootAttribute(Namespace ="",IsNullable = false)]
+    [XmlRootAttribute(ElementName = "TestResultsCollection",Namespace ="",IsNullable = false)]
     public class TestResultsCollection
     {
         private TestResult testResult;
-        [XmlElementAttribute()]
+        [XmlElementAttribute(ElementName = "TestResults")]
         public TestResult TestResult { get => testResult; set => testResult = value; }
     }
 
     [System.SerializableAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [XmlTypeAttribute(AnonymousType = true)]
+    [XmlRootAttribute(ElementName = "TestResults")]
     public class TestResults
     {
         private Personnel personnel;
@@ -617,5 +618,4 @@ namespace ReportToExcelParser.Models
     }
     #endregion
 
-    */
 }
