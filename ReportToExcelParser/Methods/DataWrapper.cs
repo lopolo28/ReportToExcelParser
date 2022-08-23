@@ -92,7 +92,6 @@ namespace ReportToExcelParser.Methods
         public static Dictionary<string, ExcelFile> CreateXLSXMany(Dictionary<string, List<Reports>> reportDictionary, bool decimalComma)
         {
             Dictionary<string, ExcelFile> excelFileList = new Dictionary<string, ExcelFile>();
-
             foreach (var reports in reportDictionary)
             {
                 excelFileList.Add(reports.Key, CreateXLSX(reports.Value, decimalComma));
@@ -102,7 +101,6 @@ namespace ReportToExcelParser.Methods
         }
         public static ExcelFile CreateXLSX(List<Reports> reports,bool decimalComma)
         {
-            SpreadsheetInfo.SetLicense("SN-2022Apr07-kjD6xRmhe6e7e1MJoQbyI37N4UfIcnJInkq31MrwS26TAgUQdhgDt5vLqjJuv8Z0nWH1WpAG6RgTXfEtRDtdcBcN5Ug==A");
             ExcelFile excelFile = new ExcelFile();
             SortReports(ref reports);
             foreach (Reports report in reports)
@@ -458,5 +456,10 @@ namespace ReportToExcelParser.Methods
             return $"COUNTIF({magicFormula},\">={value}\")";
         }
         #endregion
+        public static void Init()
+        {
+            SpreadsheetInfo.SetLicense("SN-2022Apr07-kjD6xRmhe6e7e1MJoQbyI37N4UfIcnJInkq31MrwS26TAgUQdhgDt5vLqjJuv8Z0nWH1WpAG6RgTXfEtRDtdcBcN5Ug==A");
+
+        }
     }
 }

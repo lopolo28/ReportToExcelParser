@@ -9,6 +9,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -81,15 +82,21 @@ namespace ParserWF
                 List<FileInfo> fileInfos = new();
 
                 files.ForEach(x => fileInfos.Add(new FileInfo(x)));
-
                 files.Clear();
 
-                var proccessed = (await ReportsAsync(fileInfos)).ToList();
+                List<Reports> proccessed = new List<Reports>();
+
+                await foreach (var reports in ReportsAsync(fileInfos))
+                {
+                    proccessed.Add(reports);
+                }
+
+                rtbProcessInfo.Text += $"{languageDictionary[3]}: {proccessed.Count} \r\n{languageDictionary[4]}: {fileInfos.Count - proccessed.Count}\r\n";
 
                 fileInfos.Clear();
 
-                rtbProcessInfo.Text += $"{languageDictionary[3]}: {proccessed.Count} \r\n{languageDictionary[4]}: {fileInfos.Count - proccessed.Count}";
-
+                WeakReference wr = new WeakReference(proccessed);
+                
                 switch (cBFailedItems.SelectedIndex)
                 {
                     case 1:
@@ -117,45 +124,32 @@ namespace ParserWF
                         break;
                 }
                 ReportDictionary.Add("Passed", proccessed);
+                proccessed.Clear();
+#if DEBUG
+                rtbProcessInfo.Text += $"Releasing Memory \r\n";
+#endif
+                GC.Collect();
 
                 gBStep3.Enabled = true;
             }
         }
 
-        private async Task<Reports[]> ReportsAsync(List<FileInfo> fileInfos)
+        private async Task<Reports[]> ResultsAsyncBulk(List<FileInfo> fileInfos)
         {
-            try
-            {
-                var reports = await Unwrapper.UnWrapFilesAsync<Reports>(fileInfos);
-                return reports;
-            }
-            catch (Exception)
-            {
-                List<Reports> reports = new List<Reports>();
-                rtbProcessInfo.Text += "Bulk Failed\r\n"+ "Starting one by one operation\r\n";
-                for (int i = 0; i < fileInfos.Count; i++)
-                {
-                    try
-                    {
-                        var report = await Unwrapper.UnWrapAsync<Reports>(fileInfos[i].FullName);
-                        reports.Add(report);
-                    }
-                    catch (Exception ex)
-                    {
-#if DEBUG
-                        rtbProcessInfo.Text += ex.Message + "\r\n";
-#else
-                        rtbProcessInfo.Text += $"{languageDictionary[5]}: {fileInfos[i].Name}\r\n";
-#endif
-                    }
-                }
-                return reports.ToArray();
-            }
+            return await Unwrapper.UnWrapFilesAsync<Reports>(fileInfos.ToArray());
         }
 
-#endregion
+        private async IAsyncEnumerable<Reports> ReportsAsync(List<FileInfo> fileInfos)
+        {
+            List<Reports> reports = new List<Reports>();
+            for (int i = 0; i < fileInfos.Count; i++)
+                yield return await Unwrapper.UnWrapAsync<Reports>(fileInfos[i].FullName);
 
-#region Step3 - Export
+        }
+
+        #endregion
+
+        #region Step3 - Export
         private void btDirectorySelection_Click(object sender, EventArgs e)
         {
             using (var fdb = new FolderBrowserDialog())
@@ -176,9 +170,12 @@ namespace ParserWF
         {
             try
             {
-                var excelFileDictionary = DataWrapper.CreateXLSXMany(ReportDictionary,cbDecimalComma.Checked);
+                DataWrapper.Init();
+                var excelFileDictionary = DataWrapper.CreateXLSXMany(ReportDictionary, cbDecimalComma.Checked);
 
                 ReportDictionary.Clear();
+
+                GC.Collect();
 
                 foreach (var item in excelFileDictionary)
                 {
@@ -193,9 +190,9 @@ namespace ParserWF
             }
 
         }
-#endregion
+        #endregion
 
-#region Translation
+        #region Translation
         private void LanguageComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var comboBox = sender as ToolStripComboBox;
@@ -257,7 +254,7 @@ namespace ParserWF
                     break;
             }
         }
-#endregion
+        #endregion
 
 
     }
