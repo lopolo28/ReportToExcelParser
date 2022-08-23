@@ -9,10 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParserWF", "ParserWF\Parser
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{70A4EB10-09CF-4DE7-BAB1-A01A2C9841CA}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\..\Downloads\!DFC EoL reports\EB03240FFFF1122223001047\2022-08-11_09-56-36\EB03240FFFF1122223001047_2022-08-11_17-31-41_EOLT.csv = ..\..\..\Downloads\!DFC EoL reports\EB03240FFFF1122223001047\2022-08-11_09-56-36\EB03240FFFF1122223001047_2022-08-11_17-31-41_EOLT.csv
 		Poznamky.txt = Poznamky.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandBox", "SandBox\SandBox.csproj", "{D26EB533-23EA-4254-87FF-B85EADC8E59D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SandBox", "SandBox\SandBox.csproj", "{D26EB533-23EA-4254-87FF-B85EADC8E59D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

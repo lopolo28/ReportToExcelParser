@@ -79,8 +79,15 @@ namespace ParserWF
             if (files.Count > 0)
             {
                 List<FileInfo> fileInfos = new();
+
                 files.ForEach(x => fileInfos.Add(new FileInfo(x)));
+
+                files.Clear();
+
                 var proccessed = (await ReportsAsync(fileInfos)).ToList();
+
+                fileInfos.Clear();
+
                 rtbProcessInfo.Text += $"{languageDictionary[3]}: {proccessed.Count} \r\n{languageDictionary[4]}: {fileInfos.Count - proccessed.Count}";
 
                 switch (cBFailedItems.SelectedIndex)
@@ -119,18 +126,18 @@ namespace ParserWF
         {
             try
             {
-                var reports = await ReportToExcelParser.Methods.Unwrapper.UnWrapFilesAsync<Reports>(fileInfos);
+                var reports = await Unwrapper.UnWrapFilesAsync<Reports>(fileInfos);
                 return reports;
             }
             catch (Exception)
             {
                 List<Reports> reports = new List<Reports>();
-
+                rtbProcessInfo.Text += "Bulk Failed\r\n"+ "Starting one by one operation\r\n";
                 for (int i = 0; i < fileInfos.Count; i++)
                 {
                     try
                     {
-                        var report = await ReportToExcelParser.Methods.Unwrapper.UnWrapAsync<Reports>(fileInfos[i].FullName);
+                        var report = await Unwrapper.UnWrapAsync<Reports>(fileInfos[i].FullName);
                         reports.Add(report);
                     }
                     catch (Exception ex)
@@ -170,6 +177,8 @@ namespace ParserWF
             try
             {
                 var excelFileDictionary = DataWrapper.CreateXLSXMany(ReportDictionary,cbDecimalComma.Checked);
+
+                ReportDictionary.Clear();
 
                 foreach (var item in excelFileDictionary)
                 {
