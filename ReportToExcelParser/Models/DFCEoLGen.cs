@@ -117,6 +117,8 @@ namespace ReportToExcelParser.Models
     }
 
     [XmlRoot(ElementName = "Datum", Namespace = "urn:IEEE-1671:2010:Common")]
+    [XmlTypeAttribute(Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0", TypeName = "TS_double")]
+
     public class Datum
     {
         [XmlAttribute(AttributeName = "value")]
@@ -165,9 +167,9 @@ namespace ReportToExcelParser.Models
         [XmlAttribute(AttributeName = "operator")]
         public string Operator { get; set; }
     }
-
-    [XmlRoot(ElementName = "Low", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
-    public class Low
+    [XmlType(Namespace = "urn:IEEE-1671:2010:Common", TypeName = "double")]
+    [XmlRoot("Low",Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    public class Low 
     {
         [XmlAttribute(AttributeName = "value")]
         public string Value { get; set; }
@@ -175,7 +177,8 @@ namespace ReportToExcelParser.Models
         public string Type { get; set; }
     }
 
-    [XmlRoot(ElementName = "High", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    [XmlType(Namespace = "urn:IEEE-1671:2010:Common", TypeName = "double")]
+    [XmlRoot("High",Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
     public class High
     {
         [XmlAttribute(AttributeName = "value")]
@@ -498,6 +501,7 @@ namespace ReportToExcelParser.Models
         public string Value { get; set; }
     }
 
+    [XmlType(Namespace = "urn:IEEE-1671:2010:Common", TypeName = "double")]
     [XmlRoot(ElementName = "TestSocketIndex", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
     public class TestSocketIndex
     {
@@ -512,7 +516,7 @@ namespace ReportToExcelParser.Models
     {
         [XmlElement(ElementName = "NumOfResults", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
         public NumOfResults NumOfResults { get; set; }
-        [XmlElement(ElementName = "TestSocketIndex", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+        [XmlElement(Namespace = "TestSocketIndex",ElementName = "TestSocketIndex")]
         public TestSocketIndex TestSocketIndex { get; set; }
     }
 

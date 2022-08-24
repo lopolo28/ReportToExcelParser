@@ -17,6 +17,7 @@ namespace ReportToExcelParser.Methods
             XmlSerializer ser = new(typeof(T));
             using (XmlReader reader = XmlReader.Create(path))
             {
+                
                 return (T)ser.Deserialize(reader);
             }
         }

@@ -7,61 +7,60 @@ using System.Xml.Serialization;
 
 namespace ReportToExcelParser.Models.Old
 {
-    
+
     [System.SerializableAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute()]
     [XmlTypeAttribute(AnonymousType = true)]
-    [XmlRootAttribute(ElementName = "TestResultsCollection",Namespace ="",IsNullable = false)]
+    [XmlRoot(ElementName = "TestResultsCollection", Namespace = "urn:IEEE-1636.1:2011:01:TestResultsCollection")]
     public class TestResultsCollection
     {
-        private TestResult testResult;
+        private TestResults testResults;
         [XmlElementAttribute(ElementName = "TestResults")]
-        public TestResult TestResult { get => testResult; set => testResult = value; }
+        public TestResults TestResults { get => testResults; set => testResults = value; }
+
+
+        [XmlAttribute(AttributeName = "trc", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string Trc { get; set; }
+        [XmlAttribute(AttributeName = "tr", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string Tr { get; set; }
+        [XmlAttribute(AttributeName = "c", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string C { get; set; }
+        [XmlAttribute(AttributeName = "xsi", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string Xsi { get; set; }
+        [XmlAttribute(AttributeName = "ts", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string Ts { get; set; }
     }
 
-    [System.SerializableAttribute()]
+    [Serializable()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [XmlTypeAttribute(AnonymousType = true)]
-    [XmlRootAttribute(ElementName = "TestResults")]
+    [XmlRoot(ElementName = "TestResults", Namespace = "urn:IEEE-1636.1:2011:01:TestResultsCollection")]
     public class TestResults
     {
-        private Personnel personnel;
-        private ResultSet resultSet;
-        private TestProgram testProgram;
-        private TestStation testStation;
-        private Extension extension;
-        [XmlElementAttribute()]
-        public Personnel Personnel
-        {
-            get => personnel;
-            set => personnel = value;
-        }
-
-        [XmlElementAttribute()]
-        public ResultSet ResultSet
-        {
-            get => resultSet;
-            set => resultSet = value;
-        }
-
-        [XmlElementAttribute()]
-        public TestProgram TestProgram
-        {
-            get => testProgram;
-            set => testProgram = value;
-        }
-        [XmlElementAttribute()]
-        public TestStation TestStation
-        {
-            get => testStation;
-            set => testStation = value;
-        }
-        [XmlElementAttribute()]
-        public Extension Extension
-        {
-            get => extension;
-            set => extension = value;
-        }
+        [XmlElement(ElementName = "Personnel", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
+        public Personnel Personnel { get; set; }
+        [XmlElement(ElementName = "ResultSet", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
+        public ResultSet ResultSet { get; set; }
+        [XmlElement(ElementName = "TestProgram", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
+        public TestProgram TestProgram { get; set; }
+        [XmlElement(ElementName = "TestStation", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
+        public TestStation TestStation { get; set; }
+        [XmlElement(ElementName = "UUT", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
+        public UUT UUT { get; set; }
+        [XmlElement(ElementName = "Extension", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
+        public Extension Extension { get; set; }
+        [XmlAttribute(AttributeName = "uuid")]
+        public string Uuid { get; set; }
+        [XmlAttribute(AttributeName = "trc", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string Trc { get; set; }
+        [XmlAttribute(AttributeName = "tr", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string Tr { get; set; }
+        [XmlAttribute(AttributeName = "c", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string C { get; set; }
+        [XmlAttribute(AttributeName = "xsi", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string Xsi { get; set; }
+        [XmlAttribute(AttributeName = "ts", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string Ts { get; set; }
     }
 
     #region Personnel
@@ -71,7 +70,7 @@ namespace ReportToExcelParser.Models.Old
     public class Personnel
     {
         private SystemOperator systemOperator;
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("SystemOperator")]
         public SystemOperator SystemOperator
         {
             get => systemOperator;
@@ -85,13 +84,13 @@ namespace ReportToExcelParser.Models.Old
     {
         private string ID;
         private string Name;
-        [XmlAttributeAttribute()]
+        [XmlAttributeAttribute("ID")]
         public string id
         {
             get => ID;
             set => ID = value;
         }
-        [XmlAttributeAttribute()]
+        [XmlAttributeAttribute("name")]
         public string name
         {
             get => Name;
@@ -106,45 +105,64 @@ namespace ReportToExcelParser.Models.Old
     [XmlTypeAttribute(AnonymousType = true)]
     public class ResultSet
     {
+        private string id;
+        private string name;
+        private string startDateTime;
+        private string endDateTime;
+        private string testReferenceID;
         private Extension extension;
-        private string outcome;
+        private Outcome outcome;
         private SessionAction[] sessionActions;
         private Test[] test;
         private TestGroup[] testGroup;
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("Extention")]
         public Extension Extension
         {
             get => extension;
             set => extension = value;
         }
 
-        [XmlAttributeAttribute()]
-        public string Outcome
+        [XmlElementAttribute("Outcome")]
+        public Outcome Outcome
         {
             get => outcome;
             set => outcome = value;
         }
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("SessionAction")]
         public SessionAction[] SessionActions
         {
             get => sessionActions;
             set => sessionActions = value;
         }
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("Test")]
         public Test[] Test
         {
             get => test;
             set => test = value;
         }
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("TestGroup")]
         public TestGroup[] TestGroup
         {
             get => testGroup;
             set => testGroup = value;
         }
+        [XmlAttributeAttribute("ID")]
+        public string ID { get => id; set => id = value; }
+
+        [XmlAttributeAttribute("name")]
+        public string Name { get => name; set => name = value; }
+
+        [XmlAttributeAttribute("startDateTime")]
+        public string StartDateTime { get => startDateTime; set => startDateTime = value; }
+
+        [XmlAttributeAttribute("endDateTime")]
+        public string EndDateTime { get => endDateTime; set => endDateTime = value; }
+
+        [XmlAttributeAttribute("testReferenceID")]
+        public string TestReferenceID { get => testReferenceID; set => testReferenceID = value; }
     }
     [System.SerializableAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -153,20 +171,36 @@ namespace ReportToExcelParser.Models.Old
     {
         private TSStepProperties? tSStepProperties;
         private TSLimitProperties? tSLimitProperties;
+        private TSResultSetProperties? tSResultSetProperties;
 
-        [XmlAttributeAttribute()]
+        [XmlElement(ElementName = "TSStepProperties", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
         public TSStepProperties? TSStepProperties
         {
             get => tSStepProperties;
             set => tSStepProperties = value;
         }
 
-        [XmlAttributeAttribute()]
+        [XmlElement(ElementName = "TSLimitProperties", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
         public TSLimitProperties? TSLimitProperties
         {
             get => tSLimitProperties;
             set => tSLimitProperties = value;
         }
+        [XmlElement(ElementName = "TSResultSetProperties", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+        public TSResultSetProperties? TSResultSetProperties 
+        { 
+            get => tSResultSetProperties; 
+            set => tSResultSetProperties = value; 
+        }
+    }
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [XmlTypeAttribute(AnonymousType = true)]
+    public class Outcome
+    {
+        private string value;
+        [XmlAttributeAttribute("value")]
+        public string Value { get => value; set => this.value = value; }
     }
     [System.SerializableAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -175,49 +209,61 @@ namespace ReportToExcelParser.Models.Old
     {
         private string stepType;
         private string stepGroup;
-        private int blockLevel;
-        private int index;
-        private double totalTime;
-        private double moduleTime;
+        private string blockLevel;
+        private string index;
+        private string totalTime;
+        private string? moduleTime;
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("StepType")]
         public string StepType
         {
             get => stepType;
             set => stepType = value;
         }
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("StepGroup")]
         public string StepGroup
         {
             get => stepGroup;
             set => stepGroup = value;
         }
 
-        [XmlAttributeAttribute()]
-        public int BlockLevel
+        [XmlElementAttribute("BlockLevel")]
+        public string BlockLevel
         {
             get => blockLevel;
             set => blockLevel = value;
         }
-        [XmlAttributeAttribute()]
-        public int Index
+        [XmlElementAttribute("Index")]
+        public string Index
         {
             get => index;
-            set => index= value;
+            set => index = value;
         }
 
-        [XmlAttributeAttribute()]
-        public double TotalTime
+        [XmlElementAttribute("TotalTime")]
+        public string TotalTime
         {
             get => totalTime;
             set => totalTime = value;
         }
-        [XmlAttributeAttribute()]
-        public double ModuleTime
+        [XmlElementAttribute("ModuleTime")]
+        public string? ModuleTime
         {
             get => moduleTime;
             set => moduleTime = value;
         }
+    }
+
+    public class TSResultSetProperties
+    {
+        private NumOfResults numOfResults;
+        private TestSocketIndex testSocketIndex;
+
+        [XmlElementAttribute("NumOfResults")]
+        public NumOfResults NumOfResults { get => numOfResults; set => numOfResults = value; }
+
+        [XmlElementAttribute("TestSocketIndex")]
+        public TestSocketIndex TestSocketIndex { get => testSocketIndex; set => testSocketIndex = value; }
     }
     [System.SerializableAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -226,7 +272,7 @@ namespace ReportToExcelParser.Models.Old
     {
         private Extension extension;
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("Extension")]
         public Extension Extension
         {
             get => extension;
@@ -242,21 +288,21 @@ namespace ReportToExcelParser.Models.Old
         private string outcome;
         private TestResult testResult;
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("Extension")]
         public Extension Extension
         {
             get => extension;
             set => extension = value;
         }
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute()]
         public string Outcome
         {
             get => outcome;
             set => outcome = value;
         }
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute()]
         public TestResult TestResult
         {
             get => testResult;
@@ -271,14 +317,14 @@ namespace ReportToExcelParser.Models.Old
         private TestData testData;
         private TestLimits testLimits;
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("TestData")]
         public TestData TestData
         {
             get => testData;
             set => testData = value;
         }
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("TestLimits")]
         public TestLimits TestLimits
         {
             get => testLimits;
@@ -290,14 +336,24 @@ namespace ReportToExcelParser.Models.Old
     [XmlTypeAttribute(AnonymousType = true)]
     public class TestData
     {
-        private double datum;
+        private Datum datum;
 
-        [XmlAttributeAttribute()]
-        public double Datum
+        [XmlElementAttribute("Datum")]
+        public Datum Datum
         {
             get => datum;
             set => datum = value;
         }
+    }
+
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [XmlTypeAttribute(AnonymousType = true)]
+    public class Datum
+    {
+        private string value;
+        [XmlAttributeAttribute("value")]
+        public string Value { get => value; set => this.value = value; }
     }
     [System.SerializableAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -306,7 +362,7 @@ namespace ReportToExcelParser.Models.Old
     {
         private Limits limits;
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("Limits")]
         public Limits Limits
         {
             get => limits;
@@ -321,14 +377,14 @@ namespace ReportToExcelParser.Models.Old
         private LimitPair limitPair;
         private Extension extension;
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("LimitPair")]
         public LimitPair LimitPair
         {
             get => limitPair;
             set => limitPair = value;
         }
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("Extension")]
         public Extension Extension
         {
             get => extension;
@@ -340,32 +396,39 @@ namespace ReportToExcelParser.Models.Old
     [XmlTypeAttribute(AnonymousType = true)]
     public class LimitPair
     {
-        private Limit limit;
-        private Limit limit2;
+        private string _operator;
+        private Limit[] limit;
 
-        [XmlAttributeAttribute()]
-        public Limit Limit
+        [XmlAttributeAttribute("operator")]
+        public string Operator
+        {
+            get => _operator;
+            set => _operator = value;
+        }
+        [XmlElementAttribute("Limit")]
+        public Limit[] Limit
         {
             get => limit;
             set => limit = value;
         }
 
-        [XmlAttributeAttribute()]
-        public Limit Limit2
-        {
-            get => limit2;
-            set => limit2 = value;
-        }
     }
     [System.SerializableAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [XmlTypeAttribute(AnonymousType = true)]
     public class Limit
     {
-        private double datum;
+        private string comparator;
+        private Datum datum;
 
-        [XmlAttributeAttribute()]
-        public double Datum
+        [XmlAttributeAttribute("comparator")]
+        public string Comparator
+        {
+            get => comparator;
+            set => comparator = value;
+        }
+        [XmlElementAttribute()]
+        public Datum Datum
         {
             get => datum;
             set => datum = value;
@@ -378,7 +441,7 @@ namespace ReportToExcelParser.Models.Old
     {
         private RawLimits rawLimits;
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("RawLimits")]
         public RawLimits RawLimits
         {
             get => rawLimits;
@@ -393,13 +456,13 @@ namespace ReportToExcelParser.Models.Old
         private double low;
         private double high;
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("Low")]
         public double Low
         {
             get => low;
             set => low = value;
         }
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("High")]
         public double High
         {
             get => high;
@@ -419,33 +482,33 @@ namespace ReportToExcelParser.Models.Old
 
 
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("Parameters")]
         public Parameters Parameters
         {
             get => parameters;
             set => parameters = value;
         }
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("Extension")]
         public Extension Extension
         {
             get => extension;
             set => extension = value;
         }
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("Outcome")]
         public string Outcome
         {
             get => outcome;
             set => outcome = value;
         }
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("SessionAction")]
         public SessionAction[] SessionAction
         {
             get => sessionAction;
             set => sessionAction = value;
         }
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("Test")]
         public Test[] Test
         {
             get => test;
@@ -459,7 +522,7 @@ namespace ReportToExcelParser.Models.Old
     {
         private Parameter[] parameter;
 
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("Parameter")]
         public Parameter[] Parameter
         {
             get => parameter;
@@ -473,21 +536,33 @@ namespace ReportToExcelParser.Models.Old
     {
         private string id;
         private string name;
+        private Data data;
 
-
-        [XmlAttributeAttribute()]
+        [XmlAttributeAttribute("ID")]
         public string Id
         {
             get => id;
             set => id = value;
         }
 
-        [XmlAttributeAttribute()]
+        [XmlAttributeAttribute("name")]
         public string Name
         {
             get => name;
             set => name = value;
         }
+        [XmlElementAttribute("Data")]
+        public Data Data { get => data; set => data = value; }
+    }
+
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [XmlTypeAttribute(AnonymousType = true)]
+    public class Data
+    {
+        private Datum datum;
+        [XmlElementAttribute("Datum")]
+        public Datum Datum { get => datum; set => datum = value; }
     }
     #endregion
 
@@ -514,7 +589,7 @@ namespace ReportToExcelParser.Models.Old
     public class Configuration
     {
         private Collection collection;
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("Collection")]
         public Collection Collection { get => collection; set => collection = value; }
     }
     [System.SerializableAttribute()]
@@ -524,6 +599,7 @@ namespace ReportToExcelParser.Models.Old
     {
         private Item[] items;
 
+        [XmlElementAttribute("Item")]
         public Item[] Items { get => items; set => items = value; }
     }
     [System.SerializableAttribute()]
@@ -533,24 +609,10 @@ namespace ReportToExcelParser.Models.Old
     {
         private string name;
         private Datum datum;
-        [XmlAttributeAttribute()]
+        [XmlAttributeAttribute("Name")]
         public string Name { get => name; set => name = value; }
-        [XmlAttributeAttribute()]
+        [XmlElementAttribute("Datum")]
         public Datum Datum { get => datum; set => datum = value; }
-    }
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(AnonymousType = true)]
-    public class Datum
-    {
-        private string _value;
-        [XmlAttributeAttribute()]
-        public string Value
-        {
-            get => _value;
-            set => _value = value;
-        }
-
     }
     #endregion
 
@@ -562,12 +624,13 @@ namespace ReportToExcelParser.Models.Old
     public class TestStation
     {
         private string serialNumber;
+        private Configuration configuration;
 
-        public string SerialNumber
-        {
-            get => serialNumber;
-            set => serialNumber = value;
-        }
+        [XmlElement(ElementName = "SerialNumber", Namespace = "urn:IEEE-1671:2010:Common")]
+        public string SerialNumber { get => serialNumber; set => serialNumber = value; }
+
+        [XmlElement(ElementName = "Configuration", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
+        public Configuration Configuration { get => configuration; set => configuration = value; }
     }
 
     #endregion
@@ -581,33 +644,33 @@ namespace ReportToExcelParser.Models.Old
     {
         private Definition definition;
         private string serialNumber;
-        [XmlElementAttribute()]
+        [XmlElementAttribute("Definition", Namespace = "urn:IEEE-1671:2010:Common")]
         public Definition Definition { get => definition; set => definition = value; }
-        [XmlElementAttribute()]
+        [XmlElementAttribute("SerialNumber", Namespace = "urn:IEEE-1671:2010:Common")]
         public string SerialNumber { get => serialNumber; set => serialNumber = value; }
     }
 
     public class Definition
     {
         private Identification identification;
-        [XmlElementAttribute()]
+        [XmlElementAttribute("Identification")]
         public Identification Identification { get => identification; set => identification = value; }
     }
 
     public class Identification
     {
-        private string model;
+        private string modelName;
         private IdentificationNumbers identificationNumbers;
-        [XmlElementAttribute()]
-        public string Model { get => model; set => model = value; }
-        [XmlElementAttribute()]
+        [XmlElementAttribute("ModelName")]
+        public string ModelName { get => modelName; set => modelName = value; }
+        [XmlElementAttribute("IdentificationNumbers")]
         public IdentificationNumbers IdentificationNumbers { get => identificationNumbers; set => identificationNumbers = value; }
     }
 
     public class IdentificationNumbers
     {
         private IdentificationNumber[] identificationNumber;
-        [XmlElementAttribute()]
+        [XmlElementAttribute("IdentificationNumber")]
         public IdentificationNumber[] IdentificationNumber { get => identificationNumber; set => identificationNumber = value; }
     }
 
@@ -615,7 +678,35 @@ namespace ReportToExcelParser.Models.Old
     {
         private string number;
         private string qualifier;
+        private string type;
+
+        [XmlAttributeAttribute("number")]
+        public string Number { get => number; set => number = value; }
+
+        [XmlAttributeAttribute("qualifier")]
+        public string Qualifier { get => qualifier; set => qualifier = value; }
+
+        [XmlAttributeAttribute("type")]
+        public string Type { get => type; set => type = value; }
     }
     #endregion
+    
+    #region Others
+    [XmlRoot(ElementName = "NumOfResults", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    public class NumOfResults
+    {
+        [XmlAttribute(AttributeName = "value")]
+        public string Value { get; set; }
+    }
 
+    [XmlRoot(ElementName = "TestSocketIndex", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    [XmlTypeAttribute(Namespace = "urn:IEEE-1671:2010:Common", TypeName = "double")]
+    public class TestSocketIndex
+    {
+        [XmlAttribute(AttributeName = "value")]
+        public string Value { get; set; }
+        [XmlAttribute(AttributeName = "type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
+        public string Type { get; set; }
+    }
+    #endregion
 }
