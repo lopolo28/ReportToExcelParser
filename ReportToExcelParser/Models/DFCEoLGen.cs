@@ -7,6 +7,59 @@ using System.Xml.Serialization;
 
 namespace ReportToExcelParser.Models
 {
+    [XmlRoot(ElementName = "TestResultsCollection", Namespace = "urn:IEEE-1636.1:2011:01:TestResultsCollection")]
+    public class TestResultsCollection
+    {
+        [XmlElement(ElementName = "TestResults", Namespace = "urn:IEEE-1636.1:2011:01:TestResultsCollection")]
+        public TestResults TestResults { get; set; }
+        [XmlAttribute(AttributeName = "trc", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string Trc { get; set; }
+        [XmlAttribute(AttributeName = "tr", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string Tr { get; set; }
+        [XmlAttribute(AttributeName = "c", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string C { get; set; }
+        [XmlAttribute(AttributeName = "xsi", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string Xsi { get; set; }
+        [XmlAttribute(AttributeName = "ts", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string Ts { get; set; }
+    }
+
+    [XmlRoot(ElementName = "TestResults", Namespace = "urn:IEEE-1636.1:2011:01:TestResultsCollection")]
+    public class TestResults
+    {
+        [XmlElement(ElementName = "Personnel", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
+        public Personnel Personnel { get; set; }
+        [XmlElement(ElementName = "ResultSet", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
+        public ResultSet ResultSet { get; set; }
+        [XmlElement(ElementName = "TestProgram", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
+        public TestProgram TestProgram { get; set; }
+        [XmlElement(ElementName = "TestStation", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
+        public TestStation TestStation { get; set; }
+        [XmlElement(ElementName = "UUT", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
+        public UUT UUT { get; set; }
+        [XmlElement(ElementName = "Extension", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
+        public Extension Extension { get; set; }
+        [XmlAttribute(AttributeName = "uuid")]
+        public string Uuid { get; set; }
+        [XmlAttribute(AttributeName = "trc", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string Trc { get; set; }
+        [XmlAttribute(AttributeName = "tr", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string Tr { get; set; }
+        [XmlAttribute(AttributeName = "c", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string C { get; set; }
+        [XmlAttribute(AttributeName = "xsi", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string Xsi { get; set; }
+        [XmlAttribute(AttributeName = "ts", Namespace = "http://www.w3.org/2000/xmlns/")]
+        public string Ts { get; set; }
+    }
+
+    [XmlRoot(ElementName = "Personnel", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
+    public class Personnel
+    {
+        [XmlElement(ElementName = "SystemOperator", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
+        public SystemOperator SystemOperator { get; set; }
+    }
+
     [XmlRoot(ElementName = "SystemOperator", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
     public class SystemOperator
     {
@@ -16,12 +69,6 @@ namespace ReportToExcelParser.Models
         public string Name { get; set; }
     }
 
-    [XmlRoot(ElementName = "Personnel", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
-    public class Personnel
-    {
-        [XmlElement(ElementName = "SystemOperator", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
-        public SystemOperator SystemOperator { get; set; }
-    }
 
     [XmlRoot(ElementName = "BlockLevel", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
     public class BlockLevel
@@ -116,28 +163,145 @@ namespace ReportToExcelParser.Models
         public Parameters Parameters { get; set; }
     }
 
-    [XmlRoot(ElementName = "Datum", Namespace = "urn:IEEE-1671:2010:Common")]
-    [XmlTypeAttribute(Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0", TypeName = "TS_double")]
+    //[XmlRoot(ElementName = "Datum", Namespace = "urn:IEEE-1671:2010:Common")]
+    //[XmlType(TypeName = "TS_double",Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
 
-    public class Datum
+    //public class Datum
+    //{
+    //    [XmlAttribute(AttributeName = "value")]
+    //    public string value { get; set; }
+
+    //    [XmlElement(ElementName = "Value", Namespace = "urn:IEEE-1671:2010:Common")]
+    //    public string Value { get; set; }
+
+    //    [XmlAttribute(AttributeName = "type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
+    //    public string Type { get; set; }
+
+    //    [XmlAttribute(AttributeName = "flags")]
+    //    public string Flags { get; set; }
+
+    //    [XmlAttribute(AttributeName = "nonStandardUnit")]
+    //    public string NonStandardUnit { get; set; }
+
+    //    [XmlElement(ElementName = "EnumValue", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    //    public string EnumValue { get; set; }
+
+    //    [XmlElement(ElementName = "NumericValue", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    //    public NumericValue NumericValue { get; set; }
+
+    //    [XmlElement(ElementName = "IsValid", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    //    public IsValid IsValid { get; set; }
+    //}
+
+    #region Datum 
+
+    [XmlRoot("Datum", Namespace = "urn:IEEE-1671:2010:Common")]
+    [XmlType("Datum", Namespace = "urn:IEEE-1671:2010:Common"),
+        XmlInclude(typeof(Datum_TS_double)),
+        XmlInclude(typeof(Datum_TS_String)), 
+        XmlInclude(typeof(Datum_TS_enum)),
+        XmlInclude(typeof(Datum_TS_uLong)),
+        XmlInclude(typeof(Datum_TS_boolean)),
+        XmlInclude(typeof(Datum_NI_HyperlinkPath))]
+    public abstract partial class Datum
+    {
+        [XmlAttribute(AttributeName = "type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
+        public abstract string Type { get; set; }
+    }
+
+    [XmlRoot("Datum-TS_double", Namespace = "urn:IEEE-1671:2010:Common")]
+    [XmlType("TS_double", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    public class Datum_TS_double : Datum
+    {
+        [XmlAttribute(AttributeName = "value")]
+        public string Value { get; set; }
+
+        [XmlAttribute(AttributeName = "nonStandardUnit")]
+        public string NonStandardUnit { get; set; }
+
+        [XmlAttribute(AttributeName = "type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
+        public override string Type { get; set; }
+        [XmlAttribute(AttributeName = "flags")]
+        public string Flags { get; set; }
+    }
+    [XmlRoot("Datum-TS_unsignedLong", Namespace = "urn:IEEE-1671:2010:Common")]
+    [XmlType("TS_unsignedLong", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    public class Datum_TS_uLong : Datum
     {
         [XmlAttribute(AttributeName = "value")]
         public string value { get; set; }
-        [XmlElement(ElementName = "Value", Namespace = "urn:IEEE-1671:2010:Common")]
-        public string Value { get; set; }
-        [XmlAttribute(AttributeName = "type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
-        public string Type { get; set; }
-        [XmlAttribute(AttributeName = "flags")]
-        public string Flags { get; set; }
+
         [XmlAttribute(AttributeName = "nonStandardUnit")]
         public string NonStandardUnit { get; set; }
+
+        [XmlAttribute(AttributeName = "type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
+        public override string Type { get; set; }
+        [XmlAttribute(AttributeName = "flags")]
+        public string Flags { get; set; }
+    }
+    [XmlRoot("Datum-TS_String", Namespace = "urn:IEEE-1671:2010:Common")]
+    [XmlType("TS_string", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    public class Datum_TS_String : Datum
+    {
+        [XmlElement(ElementName = "Value", Namespace = "urn:IEEE-1671:2010:Common")]
+        public string Value { get; set; }
+
+        [XmlAttribute(AttributeName = "type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
+        public override string Type { get; set; }
+
+        [XmlAttribute(AttributeName = "flags")]
+        public string Flags { get; set; }
+    }
+    [XmlRoot("Datum-TS_Boolean", Namespace = "urn:IEEE-1671:2010:Common")]
+    [XmlType("TS_boolean", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    public class Datum_TS_boolean : Datum
+    {
+        private bool _value;
+
+        [XmlElement(ElementName = "Value", Namespace = "urn:IEEE-1671:2010:Common")]
+        public string Value { get => _value.ToString(); set => _value = Convert.ToBoolean(value); }
+
+        [XmlAttribute(AttributeName = "type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
+        public override string Type { get; set; }
+
+        [XmlAttribute(AttributeName = "flags")]
+        public string Flags { get; set; }
+    }
+
+    [XmlRoot("Datum-TS_enum", Namespace = "urn:IEEE-1671:2010:Common")]
+    [XmlType("TS_enum", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    public class Datum_TS_enum : Datum
+    {
+        [XmlAttribute(AttributeName = "type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
+        public override string Type { get; set; }
+
+        [XmlAttribute(AttributeName = "flags")]
+        public string Flags { get; set; }
+
         [XmlElement(ElementName = "EnumValue", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
         public string EnumValue { get; set; }
+
         [XmlElement(ElementName = "NumericValue", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
-        public NumericValue NumericValue { get; set; }
+        public Limit2 NumericValue { get; set; }
+
         [XmlElement(ElementName = "IsValid", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
         public IsValid IsValid { get; set; }
     }
+
+    [XmlRoot("Datum-TS_enum", Namespace = "urn:IEEE-1671:2010:Common")]
+    [XmlType("NI_HyperlinkPath", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    public class Datum_NI_HyperlinkPath : Datum
+    {
+        [XmlElement(ElementName = "Value", Namespace = "urn:IEEE-1671:2010:Common")]
+        public string Value { get; set; }
+
+        [XmlAttribute(AttributeName = "type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
+        public override string Type { get; set; }
+
+        [XmlAttribute(AttributeName = "flags")]
+        public string Flags { get; set; }
+    }
+    #endregion
 
     [XmlRoot(ElementName = "TestData", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
     public class TestData
@@ -167,19 +331,10 @@ namespace ReportToExcelParser.Models
         [XmlAttribute(AttributeName = "operator")]
         public string Operator { get; set; }
     }
-    [XmlType(Namespace = "urn:IEEE-1671:2010:Common", TypeName = "double")]
-    [XmlRoot("Low",Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
-    public class Low 
-    {
-        [XmlAttribute(AttributeName = "value")]
-        public string Value { get; set; }
-        [XmlAttribute(AttributeName = "type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
-        public string Type { get; set; }
-    }
 
     [XmlType(Namespace = "urn:IEEE-1671:2010:Common", TypeName = "double")]
-    [XmlRoot("High",Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
-    public class High
+    [XmlRoot(Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    public class Limit2 
     {
         [XmlAttribute(AttributeName = "value")]
         public string Value { get; set; }
@@ -191,9 +346,9 @@ namespace ReportToExcelParser.Models
     public class RawLimits
     {
         [XmlElement(ElementName = "Low", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
-        public Low Low { get; set; }
+        public Limit2 Low { get; set; }
         [XmlElement(ElementName = "High", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
-        public High High { get; set; }
+        public Limit2 High { get; set; }
     }
 
     [XmlRoot(ElementName = "TSLimitProperties", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
@@ -280,6 +435,7 @@ namespace ReportToExcelParser.Models
     }
 
     [XmlRoot(ElementName = "Collection", Namespace = "urn:IEEE-1671:2010:Common")]
+    [XmlType("TS_Collection", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
     public class Collection
     {
         [XmlElement(ElementName = "Item", Namespace = "urn:IEEE-1671:2010:Common")]
@@ -318,6 +474,7 @@ namespace ReportToExcelParser.Models
         [XmlElement(ElementName = "Parameter", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
         public List<Parameter> Parameter { get; set; }
     }
+
 
     [XmlRoot(ElementName = "Expected", Namespace = "urn:IEEE-1671:2010:Common")]
     public class Expected
@@ -360,6 +517,7 @@ namespace ReportToExcelParser.Models
     }
 
     [XmlRoot(ElementName = "NumericValue", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    [XmlType("double",Namespace = "urn:IEEE-1671:2010:Common")]
     public class NumericValue
     {
         [XmlAttribute(AttributeName = "value")]
@@ -369,6 +527,7 @@ namespace ReportToExcelParser.Models
     }
 
     [XmlRoot(ElementName = "IsValid", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    [XmlType(Namespace = "urn:IEEE-1671:2010:Common", TypeName = "boolean")]
     public class IsValid
     {
         [XmlAttribute(AttributeName = "value")]
@@ -387,9 +546,20 @@ namespace ReportToExcelParser.Models
         [XmlElement(ElementName = "Value", Namespace = "urn:IEEE-1671:2010:Common")]
         public string Value { get; set; }
     }
+    #region IndexedArray
 
     [XmlRoot(ElementName = "IndexedArray", Namespace = "urn:IEEE-1671:2010:Common")]
-    public class IndexedArray
+    [XmlType("IndexedArray", Namespace = "urn:IEEE-1671:2010:Common"),
+        XmlInclude(typeof(IndexedArray_TSDouble)),
+        XmlInclude(typeof(IndexedArray_TS_hex)),
+        XmlInclude(typeof(IndexedArray_TS_string))]
+    public abstract partial class IndexedArray {
+
+    }
+
+    [XmlRoot(ElementName = "IndexedArray", Namespace = "urn:IEEE-1671:2010:Common")]
+    [XmlType("TS_doubleArray",Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    public class IndexedArray_TSDouble : IndexedArray
     {
         [XmlElement(ElementName = "Element", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
         public List<Element> Element { get; set; }
@@ -405,6 +575,42 @@ namespace ReportToExcelParser.Models
         public string Flags { get; set; }
     }
 
+    [XmlRoot(ElementName = "IndexedArray", Namespace = "urn:IEEE-1671:2010:Common")]
+    [XmlType("TS_hexadecimalArray", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    public class IndexedArray_TS_hex : IndexedArray
+    {
+        [XmlElement(ElementName = "Element", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+        public List<Element> Element { get; set; }
+        [XmlAttribute(AttributeName = "dimensions")]
+        public string Dimensions { get; set; }
+        [XmlAttribute(AttributeName = "lowerBounds")]
+        public string LowerBounds { get; set; }
+        [XmlAttribute(AttributeName = "upperBounds")]
+        public string UpperBounds { get; set; }
+        [XmlAttribute(AttributeName = "type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
+        public string Type { get; set; }
+        [XmlAttribute(AttributeName = "flags")]
+        public string Flags { get; set; }
+    }
+    [XmlRoot(ElementName = "IndexedArray", Namespace = "urn:IEEE-1671:2010:Common")]
+    [XmlType("TS_stringArray", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+    public class IndexedArray_TS_string : IndexedArray
+    {
+        [XmlElement(ElementName = "Element", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
+        public List<Element> Element { get; set; }
+        [XmlAttribute(AttributeName = "dimensions")]
+        public string Dimensions { get; set; }
+        [XmlAttribute(AttributeName = "lowerBounds")]
+        public string LowerBounds { get; set; }
+        [XmlAttribute(AttributeName = "upperBounds")]
+        public string UpperBounds { get; set; }
+        [XmlAttribute(AttributeName = "type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
+        public string Type { get; set; }
+        [XmlAttribute(AttributeName = "flags")]
+        public string Flags { get; set; }
+    }
+    #endregion
+    
     [XmlRoot(ElementName = "ResultSet", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
     public class ResultSet
     {
@@ -501,68 +707,14 @@ namespace ReportToExcelParser.Models
         public string Value { get; set; }
     }
 
-    [XmlType(Namespace = "urn:IEEE-1671:2010:Common", TypeName = "double")]
-    [XmlRoot(ElementName = "TestSocketIndex", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
-    public class TestSocketIndex
-    {
-        [XmlAttribute(AttributeName = "value")]
-        public string Value { get; set; }
-        [XmlAttribute(AttributeName = "type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
-        public string Type { get; set; }
-    }
-
     [XmlRoot(ElementName = "TSResultSetProperties", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
     public class TSResultSetProperties
     {
         [XmlElement(ElementName = "NumOfResults", Namespace = "www.ni.com/TestStand/ATMLTestResults/2.0")]
         public NumOfResults NumOfResults { get; set; }
         [XmlElement(Namespace = "TestSocketIndex",ElementName = "TestSocketIndex")]
-        public TestSocketIndex TestSocketIndex { get; set; }
+        public Limit2 TestSocketIndex { get; set; }
     }
 
-    [XmlRoot(ElementName = "TestResults", Namespace = "urn:IEEE-1636.1:2011:01:TestResultsCollection")]
-    public class TestResults
-    {
-        [XmlElement(ElementName = "Personnel", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
-        public Personnel Personnel { get; set; }
-        [XmlElement(ElementName = "ResultSet", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
-        public ResultSet ResultSet { get; set; }
-        [XmlElement(ElementName = "TestProgram", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
-        public TestProgram TestProgram { get; set; }
-        [XmlElement(ElementName = "TestStation", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
-        public TestStation TestStation { get; set; }
-        [XmlElement(ElementName = "UUT", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
-        public UUT UUT { get; set; }
-        [XmlElement(ElementName = "Extension", Namespace = "urn:IEEE-1636.1:2011:01:TestResults")]
-        public Extension Extension { get; set; }
-        [XmlAttribute(AttributeName = "uuid")]
-        public string Uuid { get; set; }
-        [XmlAttribute(AttributeName = "trc", Namespace = "http://www.w3.org/2000/xmlns/")]
-        public string Trc { get; set; }
-        [XmlAttribute(AttributeName = "tr", Namespace = "http://www.w3.org/2000/xmlns/")]
-        public string Tr { get; set; }
-        [XmlAttribute(AttributeName = "c", Namespace = "http://www.w3.org/2000/xmlns/")]
-        public string C { get; set; }
-        [XmlAttribute(AttributeName = "xsi", Namespace = "http://www.w3.org/2000/xmlns/")]
-        public string Xsi { get; set; }
-        [XmlAttribute(AttributeName = "ts", Namespace = "http://www.w3.org/2000/xmlns/")]
-        public string Ts { get; set; }
-    }
 
-    [XmlRoot(ElementName = "TestResultsCollection", Namespace = "urn:IEEE-1636.1:2011:01:TestResultsCollection")]
-    public class TestResultsCollection
-    {
-        [XmlElement(ElementName = "TestResults", Namespace = "urn:IEEE-1636.1:2011:01:TestResultsCollection")]
-        public TestResults TestResults { get; set; }
-        [XmlAttribute(AttributeName = "trc", Namespace = "http://www.w3.org/2000/xmlns/")]
-        public string Trc { get; set; }
-        [XmlAttribute(AttributeName = "tr", Namespace = "http://www.w3.org/2000/xmlns/")]
-        public string Tr { get; set; }
-        [XmlAttribute(AttributeName = "c", Namespace = "http://www.w3.org/2000/xmlns/")]
-        public string C { get; set; }
-        [XmlAttribute(AttributeName = "xsi", Namespace = "http://www.w3.org/2000/xmlns/")]
-        public string Xsi { get; set; }
-        [XmlAttribute(AttributeName = "ts", Namespace = "http://www.w3.org/2000/xmlns/")]
-        public string Ts { get; set; }
-    }
 }

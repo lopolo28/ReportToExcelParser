@@ -16,6 +16,8 @@ namespace SandBox
                 Unwrapper.UnWrapSync<TestResultsCollection>(path);
 
             Console.ReadLine();
+
+
         }
     }
 }
