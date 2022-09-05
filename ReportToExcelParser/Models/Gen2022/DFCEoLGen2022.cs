@@ -373,10 +373,10 @@ namespace ReportToExcelParser.Models.Gen2022
     [XmlRoot(ElementName = "Extension", Namespace = "urn:IEEE-1636.1:2013:TestResultsCollection")]
     public class ExtensionHeader
     {
-        [XmlElement(ElementName = "TSBatchTable")]
+        [XmlElement(ElementName = "TSBatchTable", Namespace = "www.ni.com/TestStand/ATMLTestResults/3.0")]
         public TSBatchTable TSBatchTable { get; set; }
     }
-    [XmlRoot(ElementName = "TSBatchTable")]
+    [XmlRoot(ElementName = "TSBatchTable", Namespace = "www.ni.com/TestStand/ATMLTestResults/3.0")]
     public class TSBatchTable
     {
         [XmlElement("ReportOptions")]
