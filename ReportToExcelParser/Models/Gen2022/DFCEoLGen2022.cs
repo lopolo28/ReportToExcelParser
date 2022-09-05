@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace ReportToExcelParser.Models
+namespace ReportToExcelParser.Models.Gen2022
 {
     [XmlRoot(ElementName = "TestResultsCollection", Namespace = "urn:IEEE-1636.1:2013:TestResultsCollection")]
     public class TestResultsCollection
