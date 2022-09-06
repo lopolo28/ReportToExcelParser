@@ -87,11 +87,13 @@ namespace EoLTester
             // lbIndex
             // 
             this.lbIndex.AutoSize = true;
-            this.lbIndex.Location = new System.Drawing.Point(651, 45);
+            this.lbIndex.Location = new System.Drawing.Point(626, 44);
             this.lbIndex.Name = "lbIndex";
+            this.lbIndex.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lbIndex.Size = new System.Drawing.Size(45, 20);
             this.lbIndex.TabIndex = 5;
             this.lbIndex.Text = "Index";
+            this.lbIndex.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // Form1
             // 

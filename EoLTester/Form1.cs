@@ -24,33 +24,59 @@ namespace EoLTester
 
             if (result != DialogResult.OK)
                 return;
-
-            var file = Unwrapper.UnWrapSync<TestResultsCollection>(oFD.FileName);
-            var output = TestXML(file);
-            lbFileName.Text = oFD.SafeFileName;
-            if(output.result)
+            try
             {
-                MessageBox.Show("Soubor je v pořádku");
-                return;
+                var file = Unwrapper.UnWrapSync<TestResultsCollection>(oFD.FileName);
+                var output = TestXML(file);
+                lbFileName.Text = oFD.SafeFileName;
+                if (output.result)
+                {
+                    MessageBox.Show("Soubor je v pořádku");
+                    return;
+                }
+
+                MessageBox.Show($"Bylo nalezeno {output.tests.Count} Failed Testů");
+
+                List<string> errors = new List<string>();
+                foreach (var item in output.tests)
+                    errors.Add(GetMessage(item));
+                Index = 0;
+                Tests = errors;
+                updateText();
             }
-
-            MessageBox.Show($"Bylo nalezeno {output.tests.Count} Failed Testů");
-            List<string> errors = new List<string>();
-            foreach(var item in output.tests)
+            catch (Exception err)
             {
-                var x = item.TestResult.FirstOrDefault();
-                errors.Add(@$"Test: {item.Name}
+                MessageBox.Show("Error :c");
+                tbResults.Text = err.Message;
+            }
+        }
+        static string GetMessage(Test item)
+        {
+            var x = item.TestResult.FirstOrDefault();
+            var type = x.TestData.Datum.Type;
+            switch (type)
+            {
+                case "ts:TS_double":
+                    return @$"Test: {item.Name}
 Result: {item.Outcome.Value}
 Value: {(x.TestData.Datum as Datum_TS_double).Value}
 Type: {(x.TestData.Datum as Datum_TS_double).NonStandardUnit}
 Limit1: {(x.TestLimits.Limits.LimitPair.Limit[0].Datum as Datum_TS_double).Value}
-Limit1: {(x.TestLimits.Limits.LimitPair.Limit[1].Datum as Datum_TS_double).Value}");
+Limit2: {(x.TestLimits.Limits.LimitPair.Limit[1].Datum as Datum_TS_double).Value}";
+                case "ts:TS_boolean":
+                    return @$"Test: {item.Name}
+Result: {item.Outcome.Value}
+Value: {(x.TestData.Datum as Datum_TS_boolean).Value}";
+                case "ts:TS_string":
+                    return @$"Test: {item.Name}
+Result: {item.Outcome.Value}
+Value: {(x.TestData.Datum as Datum_TS_String).Value}";
+                default:
+                    return @$"Test: {item.Name}
+Result: {item.Outcome.Value}
+Type: {type}";
             }
-            Index = 0;
-            Tests = errors;
-            updateText();
         }
-
         static (bool result, List<Test>? tests) TestXML(TestResultsCollection tRC)
         {
             var IsOkay = tRC.Extension.TSBatchTable.uUTHref.TrueForAll(x =>
@@ -64,11 +90,11 @@ Limit1: {(x.TestLimits.Limits.LimitPair.Limit[1].Datum as Datum_TS_double).Value
 
             return (false, x);
         }
-    
+
         static List<int> GetErrors(TestResultsCollection tRC)
         {
             var indexes = tRC.Extension.TSBatchTable.uUTHref.Select((value, index) => new { value, index })
-                    .Where(x => x.value.uutResult != "Passed")
+                    .Where(x => x.value.uutResult == "Failed")
                     .Select(x => x.index)
                     .ToList();
             return indexes;
@@ -109,7 +135,7 @@ Limit1: {(x.TestLimits.Limits.LimitPair.Limit[1].Datum as Datum_TS_double).Value
         }
         private void updateText()
         {
-            lbIndex.Text = Index.ToString();
+            lbIndex.Text = $"{Index+1}/{Tests.Count}";
             tbResults.Text = Tests[Index];
         }
     }
