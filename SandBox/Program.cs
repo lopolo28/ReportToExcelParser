@@ -21,33 +21,30 @@ namespace SandBox
 
             var passed = TestXML(testResultsCollectionNOK);
 
-
-            Console.WriteLine(passed);
-
-            var indexes = GetErrors(testResultsCollectionNOK);
-            indexes.ForEach(index =>
+            if(passed.result == true)
             {
-                var collection = testResultsCollectionNOK.TestResults[index].ResultSet.TestGroup.FirstOrDefault().Test.FindAll(y =>
-                {
-                    return y.Outcome.Value == "Failed";
-                }); 
-
-                var NotStarted = testResultsCollectionNOK.TestResults[index].ResultSet.TestGroup.FirstOrDefault().Test.FindAll(y =>
-                {
-                    return y.Outcome.Value == "NotStarted";
-                });
+                Console.WriteLine("Soubor je v pořádku");
+            }
+            else
+            {
+                Console.WriteLine("Soubor není v pořádku");
                 Console.ReadLine();
-            });
-            Console.ReadLine();
+            }
 
         }
 
-        static bool TestXML(TestResultsCollection tRC)
+        static (bool result,List<Test>? tests) TestXML(TestResultsCollection tRC)
         {
-            return tRC.Extension.TSBatchTable.uUTHref.TrueForAll(x =>
+            var IsOkay =  tRC.Extension.TSBatchTable.uUTHref.TrueForAll(x =>
             {
                 return x.uutResult == "Passed";
             });
+
+            if (IsOkay)
+                return (true,null);
+            var x = GetTests(tRC, GetErrors(tRC));
+
+            return (false,x);
         }
 
         static List<int> GetErrors(TestResultsCollection tRC)
@@ -56,8 +53,19 @@ namespace SandBox
                     .Where(x => x.value.uutResult != "Passed")
                     .Select(x => x.index)
                     .ToList();
-
             return indexes;
+        }
+        private static List<Test> GetTests(TestResultsCollection tRC, List<int> indexes)
+        {
+            List<Test> tests = new();
+            indexes.ForEach(index =>
+            {
+                tests = tRC.TestResults[index].ResultSet.TestGroup.FirstOrDefault().Test.FindAll(y =>
+                {
+                    return y.Outcome.Value == "Failed";
+                });
+            });
+            return tests;
         }
     }
 }
